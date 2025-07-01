@@ -8,6 +8,7 @@ frontend/node_modules/
 backend/.env
 frontend/.env
 
+backend/prisma/
 # dependencies
 /node_modules
 /.pnp
