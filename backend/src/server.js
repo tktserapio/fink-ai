@@ -17,6 +17,7 @@ import {
   processVideoFile,
   generateEmbeddings
 } from './ai-processors.js';
+import helmet from 'helmet';
 
 const upload = multer({ 
   limits: { fileSize: 100 * 1024 * 1024 }, // 100MB limit
@@ -24,7 +25,17 @@ const upload = multer({
 });
 
 const app = express();
-app.use(cors());
+
+// CORS configuration
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGIN 
+  ? process.env.ALLOWED_ORIGIN.split(',') 
+  : ['http://localhost:3000'];
+
+app.use(cors({ 
+  origin: ALLOWED_ORIGINS, 
+  credentials: true 
+}));
+app.use(helmet());
 app.use(express.json({ limit: '50mb' }));
 
 // Serve uploaded files
